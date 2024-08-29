@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar bg-primary" >
         <div class="container-fluid d-flex justify-content-center">
-            <span class="navbar h1">DreamTeam</span>
+          <span class="navbar-brand text-white h1">DreamTeam</span>
         </div>
-    </nav>
+  </nav>
 </template>
 
 <script>
