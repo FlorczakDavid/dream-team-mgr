@@ -15,7 +15,7 @@ public class Project {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long project_id;
+	private Long projectId;
 
 	@Column(name = "project_name")
 	String projectName;
@@ -34,12 +34,12 @@ public class Project {
 
 
 	public Long getId() {
-		return project_id;
+		return projectId;
 	}
 
 
 	public void setId(Long project_id) {
-		this.project_id = project_id;
+		this.projectId = project_id;
 	}
 
 
@@ -85,7 +85,7 @@ public class Project {
 
 	@Override
 	public String toString() {
-		return "Project [id=" + project_id + ", projectName=" + projectName + ", projectUniqueInternalId="
+		return "Project [id=" + projectId + ", projectName=" + projectName + ", projectUniqueInternalId="
 				+ projectUniqueInternalId + ", projectStartDate=" + projectStartDate + ", projectDescription="
 				+ projectDescription + "]";
 	}
