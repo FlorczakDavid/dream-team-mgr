@@ -10,6 +10,7 @@ import co.simplon.dream_team.entities.LanguageTechnology;
 import co.simplon.dream_team.entities.Project;
 import co.simplon.dream_team.repositories.LanguagesTechnologiesJPARepository;
 import co.simplon.dream_team.repositories.ProjectJPARepository;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @Service
@@ -23,6 +24,7 @@ public class ProjectService {
 		this.langTechs = langTechs;
 	}
 	
+	@Transactional
 	public void create(@Valid ProjectCreate inputs) {
 		Project project = new Project();
 		project.setProjectName(inputs.projectName());
@@ -38,6 +40,7 @@ public class ProjectService {
 				langTech.setLangTechName(langTechName);
 				langTechs.save(langTech);
 			}
+			project.getUsedLangTechs().add(langTech);
 			
 		}
 		projects.save(project);

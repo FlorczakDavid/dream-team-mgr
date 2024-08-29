@@ -1,12 +1,17 @@
 package co.simplon.dream_team.entities;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,6 +21,13 @@ public class Project {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long projectId;
+	
+	@ManyToMany
+	@JoinTable(
+		name="t_use",
+		joinColumns = @JoinColumn(name = "project_id"),
+		inverseJoinColumns = @JoinColumn(name = "lang_tech_id"))
+	Set<LanguageTechnology> usedLangTechs = new HashSet<>();
 
 	@Column(name = "project_name")
 	String projectName;
@@ -80,6 +92,16 @@ public class Project {
 
 	public void setProjectDescription(String projectDescription) {
 		this.projectDescription = projectDescription;
+	}
+	
+
+	public Set<LanguageTechnology> getUsedLangTechs() {
+		return usedLangTechs;
+	}
+
+
+	public void setUsedLangTechs(Set<LanguageTechnology> usedLangTechs) {
+		this.usedLangTechs = usedLangTechs;
 	}
 
 
