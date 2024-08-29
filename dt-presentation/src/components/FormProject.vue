@@ -56,6 +56,8 @@
 </template>
 
 <script>
+// import { send } from 'vite';
+
 export default {
   name: '',
   data() {
@@ -64,7 +66,13 @@ export default {
       input: '',
       stacks: [],
       stackDatas: [],
-      name:''
+      formData: {
+        projectName: '',
+        projectUniqueInternalId:'',
+        projectStartDate:'',
+        projectDescription:'',
+        langTechNames:[]
+      }
 
     }
   },
@@ -92,48 +100,52 @@ export default {
     },
 
     getFormValues(submitEvent){
-      this.name= submitEvent.target.elements.name.value;
-      console.log(this.name);
+      this.formData.projectName= submitEvent.target.elements.name.value,
+      this.formData.projectUniqueInternalId= submitEvent.target.elements.projectId.value,
+      this.formData.projectStartDate= submitEvent.target.elements.releaseDate.value,
+      this.formData.projectDescription= submitEvent.target.elements.desc.value,
+      this.formData.langTechNames= this.stacks
+      this.send(this.formData)
+    },
+
+    async send(data) {
+      // const form = document.querySelector('#project-form');
+      // //   // Form's fields as key/value pairs
+      // const formData = new FormData(form);
+      // // Convert form data as JS object
+      // console.log(formData);
+      // const object = {};
+      // formData.forEach((value, key) => object[key] = value);
+      // Convert JS object as JSON to send in request body
+      const json = JSON.stringify(data);
+      console.log(json);
+      // JS object for request options
+      // Needs to set method POST (GET is default)
+      // Needs to specify request's body content type (expected by server)
+      const options = {
+        method: 'POST',
+        headers: new Headers({ 'content-type': 'application/json' }),
+        body: json
+      }
+      // try-catch to handle potential client/server communication errors
+      try {
+        const response = await fetch('http://localhost:8080/projects/create', options);
+        // if (response.status === 202) { // Expected success status code
+        //   form.reset();
+        //   alert('Wow you are lucky mate, everything is okay!');
+        // } else { // Any other status code
+        //   alert('A client or server error has occured!');
+        // }
+      } catch (err) {
+        alert('An unexpected error has occured!');
+        console.error(err);
+      }
+
+      // form.addEventListener('submit', async (event) => {
+      //   event.preventDefault();
+      //   await send();
+      // });
     }
-
-    // async send() {
-    //   const form = document.querySelector('#project-form');
-    //   //   // Form's fields as key/value pairs
-    //   const formData = new FormData(form);
-    //   // Convert form data as JS object
-    //   console.log(formData);
-    //   const object = {};
-    //   formData.forEach((value, key) => object[key] = value);
-    //   // Convert JS object as JSON to send in request body
-    //   const json = JSON.stringify(object);
-    //   console.log(json);
-    //   // JS object for request options
-    //   // Needs to set method POST (GET is default)
-    //   // Needs to specify request's body content type (expected by server)
-    //   const options = {
-    //     method: 'POST',
-    //     headers: new Headers({ 'content-type': 'application/json' }),
-    //     body: json
-    //   }
-    //   // try-catch to handle potential client/server communication errors
-    //   try {
-    //     const response = await fetch('localhost:8080/projects/create', options);
-    //     if (response.status === 202) { // Expected success status code
-    //       form.reset();
-    //       alert('Wow you are lucky mate, everything is okay!');
-    //     } else { // Any other status code
-    //       alert('A client or server error has occured!');
-    //     }
-    //   } catch (err) {
-    //     alert('An unexpected error has occured!');
-    //     console.error(err);
-    //   }
-
-    //   // form.addEventListener('submit', async (event) => {
-    //   //   event.preventDefault();
-    //   //   await send();
-    //   // });
-    // }
   }
 }
 </script>
