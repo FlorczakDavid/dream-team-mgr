@@ -8,6 +8,7 @@ import co.simplon.dream_team.dtos.LanguageTechnologyData;
 import co.simplon.dream_team.dtos.ProjectCreate;
 import co.simplon.dream_team.entities.LanguageTechnology;
 import co.simplon.dream_team.entities.Project;
+import co.simplon.dream_team.exceptions.InvalidLanguageTechnologyNameException;
 import co.simplon.dream_team.repositories.LanguagesTechnologiesJPARepository;
 import co.simplon.dream_team.repositories.ProjectJPARepository;
 import jakarta.transaction.Transactional;
@@ -34,6 +35,11 @@ public class ProjectService {
 		
 		String[] langTechNames = inputs.langTechNames();
 		for (String langTechName : langTechNames) {
+			langTechName = langTechName.trim();
+	        if (langTechName == null || langTechName.isEmpty()) {
+	            throw new InvalidLanguageTechnologyNameException("Language technology name cannot be empty.");
+	        }
+	        
 			LanguageTechnology langTech = langTechs.findByLangTechNameIgnoreCase(langTechName);
 			if(langTech == null) { //create
 				langTech = new LanguageTechnology();
