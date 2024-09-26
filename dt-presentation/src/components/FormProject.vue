@@ -74,7 +74,7 @@ export default {
 
   methods: {
     addLangTech(langTech) {
-      this.formData.langTechNames.push(langTech);
+      //this.formData.langTechNames.push(langTech);
       if(langTech.trim() != "") {
         this.formData.langTechNames.push(langTech.trim());
       }

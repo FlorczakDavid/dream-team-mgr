@@ -25,29 +25,11 @@
     </div>
 
     <div class="mb-3">
-      <label for="stackName" class="fs-5 form-label mb-2 mt-4">Languages and technologies</label>
-      <div>
-        <div class="card-body d-flex flex-column">
-          <div class="input-group form-label mb-2 mt-4">
-            <div>
-              <span v-for="(stack, index) in stacks" :key="index" class="badge bg-primary me-2">
-                {{ stack }}
-                <button type="button" class="btn-close btn-close-white ms-2" aria-label="Close"
-                  @click="removeStackChip(stack)"></button>
-              </span>
-            </div>
-          </div>
-
-          <div class="input-group form-label mb-2">
-            <input v-model="inputStack" class="form-control" list="datalistStack" id="stackName" />
-            <button type="button" class="btn btn-outline-secondary ms-2 rounded-circle" @click="addStackChip" 
-            style="border-radius: 50%;">+</button>
-          </div>
-          <datalist id="datalistStack">
-            <option v-for="(stackData, index) in stackDatas" :key="index" :value="stackData"></option>
-          </datalist>
-        </div>
-      </div>
+      <LangTechSelector
+        @add-langTech="addLangTech"
+        @rm-langTech="rmLangTech"
+        :stacksToProps="stacks"
+      />
     </div>
     <div class="d-flex justify-content-center m-4">
     <button class="btn btn-primary">UPDATE</button></div>
@@ -60,6 +42,8 @@ import { useVuelidate } from '@vuelidate/core'
 import { helpers, required, maxLength} from '@vuelidate/validators'
 import {requiredMessage, maxLengthMessage} from '../plugin/validatorMessage'
 
+import LangTechSelector from "./LangTechSelector.vue"
+
 export default {
   name: '',
   setup () {
@@ -70,10 +54,10 @@ export default {
       // nameInitial: "FFF",
       // idInitial: "87",
 
-      inputStack: '',
+      //inputStack: '',
       input: '',
       stacks: [],
-      stackDatas: [],
+      //stackDatas: [],
       inputName:'',
       inputPId:'',
       inputDate:'',
@@ -97,16 +81,16 @@ export default {
 
   async mounted() {
 
-    try {
-      const response = await fetch("http://localhost:8080/langTechs");
-      this.data = await response.json();
-      this.stackDatasTemps = this.data.forEach(element => {
-        this.stackDatas.push(element.langTechName)
-      });
-      console.log(this.data);
-    } catch (error) {
-      console.error("Failed to fetch data:", error);
-    }
+    // try {
+    //   const response = await fetch("http://localhost:8080/langTechs");
+    //   this.data = await response.json();
+    //   this.stackDatasTemps = this.data.forEach(element => {
+    //     this.stackDatas.push(element.langTechName)
+    //   });
+    //   console.log(this.data);
+    // } catch (error) {
+    //   console.error("Failed to fetch data:", error);
+    // }
   },
 
   methods: {
@@ -132,18 +116,27 @@ export default {
 
 
     },
-    //creer fucntion ici
-    addStackChip() {
-      if(this.inputStack.trim() != "") {
-        this.stacks.push(this.inputStack.trim());
-        console.log(this.stacks);
+    addLangTech(langTech) {
+      this.formData.langTechNames.push(langTech);
+      if(langTech.trim() != "") {
+        this.formData.langTechNames.push(langTech.trim());
       }
-      this.inputStack = ''
     },
-    removeStackChip(chip) {
-      this.stacks = this.stacks.filter((s) => s !== chip);
-      console.log(this.stacks);
+    rmLangTech(langTech) {
+      this.formData.langTechNames = this.formData.langTechNames.filter((s) => s !== langTech)
     },
+    //creer fucntion ici
+    // addStackChip() {
+    //   if(this.inputStack.trim() != "") {
+    //     this.stacks.push(this.inputStack.trim());
+    //     console.log(this.stacks);
+    //   }
+    //   this.inputStack = ''
+    // },
+    // removeStackChip(chip) {
+    //   this.stacks = this.stacks.filter((s) => s !== chip);
+    //   console.log(this.stacks);
+    // },
 
     getFormValues(){
       this.formData.projectName= this.inputName,
@@ -152,8 +145,8 @@ export default {
       this.formData.projectStartDate= this.inputDate,
       this.formData.projectDescription= this.inputDesc,
       console.log(this.formData.projectDescription);
-      this.formData.langTechNames= this.stacks;
-      console.log(this.stacks);
+      // this.formData.langTechNames= this.stacks;
+      // console.log(this.stacks);
 
       const validated = this.validate();
       this.sendvalidForm(validated);
@@ -222,6 +215,10 @@ export default {
         console.error(err);
       }
     }
+  },
+
+  components: {
+    LangTechSelector
   }
 }
 </script>
