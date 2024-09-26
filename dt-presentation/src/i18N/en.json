@@ -1,0 +1,18 @@
+{
+    "header": {
+    },
+    "formProject": {
+        "pageTitle":"Add your project to Dream Team Platform",
+        "name":"Name",
+        "id":"Unique internal identifier",
+        "date":"Release Date",
+        "description":"Description",
+        "languagesAndTechnologies":"Languages and technologies",
+        "sendButton":"SEND",
+        "placeholders" : {
+            "name":"max 200 characters",
+            "id":"max 100 characters",
+            "date":"dd/mm/yyyy"
+        }
+    }
+}

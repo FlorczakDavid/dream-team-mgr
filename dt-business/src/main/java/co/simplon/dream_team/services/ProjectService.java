@@ -59,6 +59,10 @@ public class ProjectService {
 	public Collection<LanguageTechnologyData> getAll() {
 		return langTechs.findProjectedBy();
 	}
+
+	public Collection<LanguageTechnologyData> getByName(String name) {
+		return langTechs.findTop5ByLangTechNameStartsWithIgnoreCaseOrderByLangTechNameAsc(name);
+	}
 	
 	
 }

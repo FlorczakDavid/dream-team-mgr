@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +24,11 @@ public class LanguagesTechonogiesController {
 	@GetMapping
 	Collection<LanguageTechnologyData> getAll() {
 		return service.getAll();
+	}
+	
+	@GetMapping("/{name}")
+	Collection<LanguageTechnologyData> getByName(@PathVariable("name") String name) {
+		return service.getByName(name);
 	}
 
 }
