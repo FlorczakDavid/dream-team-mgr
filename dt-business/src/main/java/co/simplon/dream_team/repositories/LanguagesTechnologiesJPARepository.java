@@ -15,4 +15,6 @@ public interface LanguagesTechnologiesJPARepository extends JpaRepository<Langua
 
 	Collection<LanguageTechnologyData> findProjectedBy();
 	
+	LanguageTechnologyData findByLangTechId(Long id);//query 
+	
 }

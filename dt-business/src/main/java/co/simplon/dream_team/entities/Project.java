@@ -111,6 +111,12 @@ public class Project {
 				+ projectUniqueInternalId + ", projectStartDate=" + projectStartDate + ", projectDescription="
 				+ projectDescription + "]";
 	}
+
+
+	public void setUsedLangTechs(LanguageTechnology langTech) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }
