@@ -55,42 +55,42 @@ public class Project {
 	}
 
 
-	public String getProjectName() {
+	public String getName() {
 		return name;
 	}
 
 
-	public void setProjectName(String projectName) {
+	public void setName(String projectName) {
 		this.name = projectName;
 	}
 
 
-	public String getProjectUniqueInternalId() {
+	public String getUniqueInternalId() {
 		return uniqueInternalId;
 	}
 
 
-	public void setProjectUniqueInternalId(String projectUniqueInternalId) {
+	public void setUniqueInternalId(String projectUniqueInternalId) {
 		this.uniqueInternalId = projectUniqueInternalId;
 	}
 
 
-	public Date getProjectStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
 
-	public void setProjectStartDate(Date projectStartDate) {
+	public void setStartDate(Date projectStartDate) {
 		this.startDate = projectStartDate;
 	}
 
 
-	public String getProjectDescription() {
+	public String getDescription() {
 		return description;
 	}
 
 
-	public void setProjectDescription(String projectDescription) {
+	public void setDescription(String projectDescription) {
 		this.description = projectDescription;
 	}
 	

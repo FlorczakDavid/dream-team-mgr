@@ -14,10 +14,10 @@ import co.simplon.dreamteam.mgr.services.ProjectService;
 @RestController
 @RequestMapping("/langTechs")
 @CrossOrigin("*")
-public class LanguageTechonologyController {
+public class LanguageTechnologyController {
 	private final ProjectService service;
 	
-	public LanguageTechonologyController(ProjectService service) {
+	public LanguageTechnologyController(ProjectService service) {
 		this.service = service;
 	}
 	

@@ -110,7 +110,7 @@ export default {
       
       this.inputDesc= this.data.oneProject.description;
       this.stackDatasTemps = this.data.oneLangTechProj.forEach(element => {
-             this.stacks.push(element.langTechName)
+             this.stacks.push(element.name)
        });
       console.log(this.stacks);
 

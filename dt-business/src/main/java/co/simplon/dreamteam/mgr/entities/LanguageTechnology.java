@@ -27,19 +27,19 @@ public class LanguageTechnology {
 	
 	public LanguageTechnology() {}
 
-	public Long getLangTechId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setLangTechId(Long langTechId) {
+	public void setId(Long langTechId) {
 		this.id = langTechId;
 	}
 
-	public String getLangTechName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setLangTechName(String langTechName) {
+	public void setName(String langTechName) {
 		this.name = langTechName;
 	}
 

@@ -34,10 +34,10 @@ public class ProjectService {
 	@Transactional
 	public void create(@Valid ProjectCreate inputs) {
 		Project project = new Project();
-		project.setProjectName(inputs.projectName());
-		project.setProjectUniqueInternalId(inputs.projectUniqueInternalId());
-		project.setProjectStartDate(inputs.projectStartDate());
-		project.setProjectDescription(inputs.projectDescription());
+		project.setName(inputs.name());
+		project.setUniqueInternalId(inputs.uniqueInternalId());
+		project.setStartDate(inputs.startDate());
+		project.setDescription(inputs.description());
 		
 		String[] langTechNames = inputs.langTechNames();
 		for (String langTechName : langTechNames) {
@@ -45,11 +45,11 @@ public class ProjectService {
 	        if (langTechName == null || langTechName.isEmpty()) {
 	            throw new LanguageTechnologyInvalidNameException("Language technology name cannot be empty.");
 	        }
-	        
-			LanguageTechnology langTech = langTechs.findByNameIgnoreCase(langTechName.trim());
+	        //A modifier
+			LanguageTechnology langTech = langTechs.findByNameIgnoreCase(langTechName);
 			if(langTech == null) { //create
 				langTech = new LanguageTechnology();
-				langTech.setLangTechName(langTechName);
+				langTech.setName(langTechName);
 				langTechs.save(langTech);
 			}
 			project.getUsedLangTechs().add(langTech);
@@ -93,10 +93,10 @@ public class ProjectService {
 	
 	public void updateProject(Long autoId, @Valid ProjectUpdate inputs) {
 		Project entity = projects.findById(autoId).get();
-	        entity.setProjectName(inputs.projectName());
-	        entity.setProjectDescription(inputs.projectDescription());
-	        entity.setProjectStartDate(inputs.projectStartDate());
-	        entity.setProjectUniqueInternalId(inputs.projectUniqueInternalId());
+	        entity.setName(inputs.name());
+	        entity.setDescription(inputs.description());
+	        entity.setStartDate(inputs.startDate());
+	        entity.setUniqueInternalId(inputs.uniqueInternalId());
 	        
 	        String[] langTechNames = inputs.langTechNames();
 	        entity.getUsedLangTechs().clear();
@@ -109,7 +109,7 @@ public class ProjectService {
 				LanguageTechnology langTech = langTechs.findByNameIgnoreCase(langTechName);
 				if(langTech == null) { //create
 					langTech = new LanguageTechnology();
-					langTech.setLangTechName(langTechName);
+					langTech.setName(langTechName);
 					langTechs.save(langTech);
 					//entity.getUsedLangTechs().add(langTech);
 				}

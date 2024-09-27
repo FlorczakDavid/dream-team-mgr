@@ -4,6 +4,10 @@ import java.util.Collection;
 import java.util.Date;
 
 
-public record ProjectView(String projectName,String projectUniqueInternalId, Date projectStartDate, String projectDescription) {
+public record ProjectView(
+		String name,
+		String uniqueInternalId, 
+		Date startDate, 
+		String description) {
 
 }
