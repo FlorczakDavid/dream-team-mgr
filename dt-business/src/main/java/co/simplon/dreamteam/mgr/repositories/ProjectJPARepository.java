@@ -14,16 +14,16 @@ import co.simplon.dreamteam.mgr.entities.Project;
 @Repository
 public interface ProjectJPARepository extends JpaRepository<Project, Long> {
 
-	boolean existsByProjectUniqueInternalId(String value);
+	boolean existsByUniqueInternalId(String value);
 
-	ProjectView findByProjectUniqueInternalId(String projectUniqueId);
+	ProjectView findByUniqueInternalId(String projectUniqueId);
 
-	ProjectView findProjectedByProjectUniqueInternalId(String projectUniqueId);
+	ProjectView findProjectedByUniqueInternalId(String projectUniqueId);
 	
-	ProjectView findByProjectId(Long autoId);
+	ProjectView findProjectedById(Long autoId);
 
-	@Query("SELECT new co.simplon.dreamteam.mgr.dtos.LanguageTechnologyData(lt.langTechName) FROM Project p JOIN p.usedLangTechs lt WHERE p.projectId = :autoId")
+	@Query("SELECT new co.simplon.dreamteam.mgr.dtos.LanguageTechnologyData(lt.name) FROM Project p JOIN p.usedLangTechs lt WHERE p.id = :autoId")
 	Collection<LanguageTechnologyData> findTechnologiesByProjectId(Long autoId);
 
-	Optional<Project> findProjectedByprojectId(Long autoId);
+	Optional<Project> findById(Long autoId);
 }

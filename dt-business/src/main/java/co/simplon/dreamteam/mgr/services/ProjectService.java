@@ -46,7 +46,7 @@ public class ProjectService {
 	            throw new LanguageTechnologyInvalidNameException("Language technology name cannot be empty.");
 	        }
 	        
-			LanguageTechnology langTech = langTechs.findByLangTechNameIgnoreCase(langTechName.trim());
+			LanguageTechnology langTech = langTechs.findByNameIgnoreCase(langTechName.trim());
 			if(langTech == null) { //create
 				langTech = new LanguageTechnology();
 				langTech.setLangTechName(langTechName);
@@ -61,7 +61,7 @@ public class ProjectService {
 	public ProjectToUpdate getOneProject(Long autoid) {
 		ProjectView oneProject;
 		//System.out.println(projects.findByProjectUniqueInternalId(projectUniqueId));
-		oneProject=projects.findByProjectId(autoid);
+		oneProject=projects.findProjectedById(autoid);
 		//System.out.println(projects.findUsedLangTechsByProjectId());
 		Collection <LanguageTechnologyData> oneLangTechProj;
 		oneLangTechProj = projects.findTechnologiesByProjectId(autoid);
@@ -80,11 +80,11 @@ public class ProjectService {
 	}
 
 	public boolean existsByProjectUniqueInternalId(String value) {
-		return projects.existsByProjectUniqueInternalId(value);
+		return projects.existsByUniqueInternalId(value);
 	}
 
 	public Collection<LanguageTechnologyData> getByName(String name) {
-		return langTechs.findTop5ByLangTechNameStartsWithIgnoreCaseOrderByLangTechNameAsc(name);
+		return langTechs.findTop5ByNameStartsWithIgnoreCaseOrderByNameAsc(name);
 	}
 
 	public Collection<LanguageTechnologyData> getAll() {
@@ -92,7 +92,7 @@ public class ProjectService {
 	}
 	
 	public void updateProject(Long autoId, @Valid ProjectUpdate inputs) {
-		Project entity = projects.findProjectedByprojectId(autoId).get();
+		Project entity = projects.findById(autoId).get();
 	        entity.setProjectName(inputs.projectName());
 	        entity.setProjectDescription(inputs.projectDescription());
 	        entity.setProjectStartDate(inputs.projectStartDate());
@@ -106,7 +106,7 @@ public class ProjectService {
 		            throw new LanguageTechnologyInvalidNameException("Language technology name cannot be empty.");
 		        }
 		        
-				LanguageTechnology langTech = langTechs.findByLangTechNameIgnoreCase(langTechName);
+				LanguageTechnology langTech = langTechs.findByNameIgnoreCase(langTechName);
 				if(langTech == null) { //create
 					langTech = new LanguageTechnology();
 					langTech.setLangTechName(langTechName);

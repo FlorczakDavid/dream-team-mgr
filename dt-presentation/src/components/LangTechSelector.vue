@@ -51,7 +51,7 @@ export default {
             const response = await fetch("http://localhost:8080/langTechs");
             this.data = await response.json();
             this.stackDatasTemps = this.data.forEach(element => {
-                this.stackDatas.push(element.langTechName)
+                this.stackDatas.push(element.name)
             });
                 console.log(this.data);
             } catch (error) {
@@ -66,7 +66,7 @@ export default {
             this.data = await response.json();
             this.stackDatas = [];
             this.stackDatasTemps = this.data.forEach(element => {
-                this.stackDatas.push(element.langTechName)
+                this.stackDatas.push(element.name)
             });
                 console.log(this.data);
             } catch (error) {

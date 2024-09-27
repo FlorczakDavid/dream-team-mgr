@@ -10,7 +10,7 @@
 
     <div class="mb-3">
       <label for="projectId" class="fs-5 form-label">Project Id <span class="text-danger">*</span></label>
-      <input type="text" v-model="inputPId" class="form-control" id="projectId" maxlength="100" placeholder="max 100 characters" name="projectId">
+      <input type="text" v-model="inputUIId" class="form-control" id="projectId" maxlength="100" placeholder="max 100 characters" name="projectId">
     </div>
 
     <div class="mb-3">
@@ -56,14 +56,14 @@ export default {
       
       input: '',
       inputName:'',
-      inputPId:'',
+      inputUIId:'',
       inputDate:'',
       inputDesc:'',
       formData: {
-        projectName: '',
-        projectUniqueInternalId:'',
-        projectStartDate:'',
-        projectDescription:'',
+        name: '',
+        uniqueInternalId:'',
+        startDate:'',
+        description:'',
         langTechNames:[]
       }
     }
@@ -83,37 +83,37 @@ export default {
       this.formData.langTechNames = this.formData.langTechNames.filter((s) => s !== langTech)
     },
     getFormValues(){
-      this.formData.projectName= this.inputName
-      this.formData.projectUniqueInternalId= this.inputPId
-      this.formData.projectStartDate= this.inputDate
-      this.formData.projectDescription= this.inputDesc
+      this.formData.name= this.inputName
+      this.formData.uniqueInternalId= this.inputUIId
+      this.formData.startDate= this.inputDate
+      this.formData.description= this.inputDesc
 
       const validated = this.validate();
-      this.sendvalidForm(validated);
+      this.sendValidForm(validated);
     },
 
     validate() {
     let validated = true;
     // HTML form inputs default type = string (empty)
     // trim inputs ("best practice")
-    const pName = this.formData.projectName.trim();
-    const pId = this.formData.projectUniqueInternalId.trim();
-    const sDate = this.formData.projectStartDate.trim();
-    const desc = this.formData.projectDescription.trim();
+    const tempName = this.formData.name.trim();
+    const tempUIId = this.formData.uniqueInternalId.trim();
+    const tempStartDate = this.formData.startDate.trim();
+    const tempDesc = this.formData.description.trim();
     // set to false as soon as an input violates a validation constraint
-    if (pName.length === 0 || pName.length > 200) {
+    if (tempName.length === 0 || tempName.length > 200) {
         validated = false;
-    } else if (pId.length === 0 || pId.length > 100) {
+    } else if (tempUIId.length === 0 || tempUIId.length > 100) {
         validated = false;
-    } else if (sDate.length === 0) {
+    } else if (tempStartDate.length === 0) {
         validated = false;
-    } else if (desc.length > 5000) {
+    } else if (tempDesc.length > 5000) {
         validated = false;
     }
     return validated;
 },
 
-    async sendvalidForm(validated){
+    async sendValidForm(validated){
       if (validated) {
         await this.send(this.formData);
       } else {
@@ -125,7 +125,7 @@ export default {
       
       //put input value null
       this.inputName ='';
-      this.inputPId ='';
+      this.inputUIId ='';
       this.inputDate='';
       this.inputDesc='';
 

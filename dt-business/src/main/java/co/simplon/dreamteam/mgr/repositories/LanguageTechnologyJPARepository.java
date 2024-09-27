@@ -11,12 +11,12 @@ import co.simplon.dreamteam.mgr.entities.LanguageTechnology;
 @Repository
 public interface LanguageTechnologyJPARepository extends JpaRepository<LanguageTechnology, Long>{
 
-	LanguageTechnology findByLangTechNameIgnoreCase(String langTechName);
+	LanguageTechnology findByNameIgnoreCase(String langTechName);
 
 	Collection<LanguageTechnologyData> findProjectedBy();
 	
-	LanguageTechnologyData findByLangTechId(Long id);//query 
+	LanguageTechnologyData findProjectedById(Long id);//query 
 
-	Collection<LanguageTechnologyData> findTop5ByLangTechNameStartsWithIgnoreCaseOrderByLangTechNameAsc(String langTechName);
+	Collection<LanguageTechnologyData> findTop5ByNameStartsWithIgnoreCaseOrderByNameAsc(String langTechName);
 	
 }
