@@ -1,14 +1,14 @@
-package co.simplon.dream_team.validators;
+package co.simplon.dreamteam.mgr.validators;
 
-import co.simplon.dream_team.services.ProjectService;
+import co.simplon.dreamteam.mgr.services.ProjectService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class UniqueProjectInternalIdValidator implements ConstraintValidator<UniqueProjectInternalId, String>{
+public class ProjectUniqueInternalIdValidator implements ConstraintValidator<ProjectUniqueInternalId, String>{
 
 	private final ProjectService service;
 	
-	public UniqueProjectInternalIdValidator(ProjectService service) {
+	public ProjectUniqueInternalIdValidator(ProjectService service) {
 		this.service = service;
 	}
 	

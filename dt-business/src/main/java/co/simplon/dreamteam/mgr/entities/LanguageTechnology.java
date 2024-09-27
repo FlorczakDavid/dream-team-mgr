@@ -1,4 +1,4 @@
-package co.simplon.dream_team.entities;
+package co.simplon.dreamteam.mgr.entities;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,30 +17,30 @@ public class LanguageTechnology {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long langTechId;
+	private Long id;
 	
 	@ManyToMany(mappedBy = "usedLangTechs")
 	Set<Project> poweredProjects = new HashSet<>();
 	
-	@Column(name = "lang_tech_name")
-	String langTechName;
+	@Column(name = "name")
+	String name;
 	
 	public LanguageTechnology() {}
 
 	public Long getLangTechId() {
-		return langTechId;
+		return id;
 	}
 
 	public void setLangTechId(Long langTechId) {
-		this.langTechId = langTechId;
+		this.id = langTechId;
 	}
 
 	public String getLangTechName() {
-		return langTechName;
+		return name;
 	}
 
 	public void setLangTechName(String langTechName) {
-		this.langTechName = langTechName;
+		this.name = langTechName;
 	}
 
 	public Set<Project> getPoweredProjects() {
@@ -53,7 +53,7 @@ public class LanguageTechnology {
 
 	@Override
 	public String toString() {
-		return "LanguageTechnology [langTechId=" + langTechId + ", langTechName=" + langTechName + "]";
+		return "LanguageTechnology [langTechId=" + id + ", langTechName=" + name + "]";
 	};
 	
 	

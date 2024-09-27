@@ -1,4 +1,4 @@
-package co.simplon.dream_team.controllers;
+package co.simplon.dreamteam.mgr.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.simplon.dream_team.dtos.ProjectCreate;
-import co.simplon.dream_team.dtos.ProjectToUpdate;
-import co.simplon.dream_team.dtos.ProjectUpdate;
-import co.simplon.dream_team.dtos.ProjectView;
-import co.simplon.dream_team.services.ProjectService;
+import co.simplon.dreamteam.mgr.dtos.ProjectCreate;
+import co.simplon.dreamteam.mgr.dtos.ProjectToUpdate;
+import co.simplon.dreamteam.mgr.dtos.ProjectUpdate;
+import co.simplon.dreamteam.mgr.dtos.ProjectView;
+import co.simplon.dreamteam.mgr.services.ProjectService;
 import jakarta.validation.Valid;
 
 @RestController
@@ -30,10 +30,10 @@ public class ProjectController {
 	}
 	
 	@GetMapping("/{id}")
-	 public ProjectToUpdate projectOne(@PathVariable("id") Long autoId) {
+	 public ProjectToUpdate getOneProject(@PathVariable("id") Long autoId) {
 
         // get one project by ID
-        return service.getProjectOne(autoId);}
+        return service.getOneProject(autoId);}
 	
 	@PostMapping("/create")
 	ResponseEntity<Object> createProject(@Valid @RequestBody ProjectCreate inputs) {

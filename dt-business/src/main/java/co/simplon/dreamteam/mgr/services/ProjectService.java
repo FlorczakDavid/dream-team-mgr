@@ -1,4 +1,4 @@
-package co.simplon.dream_team.services;
+package co.simplon.dreamteam.mgr.services;
 
 import java.util.Collection;
 import java.util.Set;
@@ -7,17 +7,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
-import co.simplon.dream_team.dtos.LanguageTechnologyData;
-import co.simplon.dream_team.dtos.ProjectCreate;
-import co.simplon.dream_team.dtos.ProjectToUpdate;
-import co.simplon.dream_team.dtos.ProjectUpdate;
-import co.simplon.dream_team.dtos.ProjectView;
-import co.simplon.dream_team.dtos.UsedLangTechsProjection;
-import co.simplon.dream_team.entities.LanguageTechnology;
-import co.simplon.dream_team.entities.Project;
-import co.simplon.dream_team.exceptions.InvalidLanguageTechnologyNameException;
-import co.simplon.dream_team.repositories.LanguagesTechnologiesJPARepository;
-import co.simplon.dream_team.repositories.ProjectJPARepository;
+import co.simplon.dreamteam.mgr.dtos.LanguageTechnologyData;
+import co.simplon.dreamteam.mgr.dtos.ProjectCreate;
+import co.simplon.dreamteam.mgr.dtos.ProjectToUpdate;
+import co.simplon.dreamteam.mgr.dtos.ProjectUpdate;
+import co.simplon.dreamteam.mgr.dtos.ProjectView;
+import co.simplon.dreamteam.mgr.entities.LanguageTechnology;
+import co.simplon.dreamteam.mgr.entities.Project;
+import co.simplon.dreamteam.mgr.exceptions.LanguageTechnologyInvalidNameException;
+import co.simplon.dreamteam.mgr.repositories.LanguageTechnologyJPARepository;
+import co.simplon.dreamteam.mgr.repositories.ProjectJPARepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
@@ -25,9 +24,9 @@ import jakarta.validation.Valid;
 public class ProjectService {
 
 	private final ProjectJPARepository projects;
-	private final LanguagesTechnologiesJPARepository langTechs;
+	private final LanguageTechnologyJPARepository langTechs;
 	
-	public ProjectService(ProjectJPARepository projects, LanguagesTechnologiesJPARepository langTechs) {
+	public ProjectService(ProjectJPARepository projects, LanguageTechnologyJPARepository langTechs) {
 		this.projects = projects;
 		this.langTechs = langTechs;
 	}
@@ -44,10 +43,10 @@ public class ProjectService {
 		for (String langTechName : langTechNames) {
 			langTechName = langTechName.trim();
 	        if (langTechName == null || langTechName.isEmpty()) {
-	            throw new InvalidLanguageTechnologyNameException("Language technology name cannot be empty.");
+	            throw new LanguageTechnologyInvalidNameException("Language technology name cannot be empty.");
 	        }
 	        
-			LanguageTechnology langTech = langTechs.findByLangTechNameIgnoreCase(langTechName);
+			LanguageTechnology langTech = langTechs.findByLangTechNameIgnoreCase(langTechName.trim());
 			if(langTech == null) { //create
 				langTech = new LanguageTechnology();
 				langTech.setLangTechName(langTechName);
@@ -59,7 +58,7 @@ public class ProjectService {
 		projects.save(project);
 	}
 	
-	public ProjectToUpdate getProjectOne(Long autoid) {
+	public ProjectToUpdate getOneProject(Long autoid) {
 		ProjectView oneProject;
 		//System.out.println(projects.findByProjectUniqueInternalId(projectUniqueId));
 		oneProject=projects.findByProjectId(autoid);
@@ -104,7 +103,7 @@ public class ProjectService {
 			for (String langTechName : langTechNames) {
 				langTechName = langTechName.trim();
 		        if (langTechName == null || langTechName.isEmpty()) {
-		            throw new InvalidLanguageTechnologyNameException("Language technology name cannot be empty.");
+		            throw new LanguageTechnologyInvalidNameException("Language technology name cannot be empty.");
 		        }
 		        
 				LanguageTechnology langTech = langTechs.findByLangTechNameIgnoreCase(langTechName);

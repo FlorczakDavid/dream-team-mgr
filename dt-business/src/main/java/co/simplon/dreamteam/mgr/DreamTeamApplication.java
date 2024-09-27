@@ -1,4 +1,4 @@
-package co.simplon.dream_team;
+package co.simplon.dreamteam.mgr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

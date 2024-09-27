@@ -1,4 +1,4 @@
-package co.simplon.dream_team.dtos;
+package co.simplon.dreamteam.mgr.dtos;
 
 import java.util.Collection;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package co.simplon.dream_team.validators;
+package co.simplon.dreamteam.mgr.validators;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,8 +10,8 @@ import jakarta.validation.Payload;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-@Constraint(validatedBy = UniqueProjectInternalIdValidator.class)
-public @interface UniqueProjectInternalId {
+@Constraint(validatedBy = ProjectUniqueInternalIdValidator.class)
+public @interface ProjectUniqueInternalId {
     String message() default "##########UniqueProjectInternalIdValidator##########";
 
     Class<?>[] groups() default {};

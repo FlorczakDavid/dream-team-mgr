@@ -1,4 +1,4 @@
-package co.simplon.dream_team.controllers;
+package co.simplon.dreamteam.mgr.controllers;
 
 import java.util.Collection;
 
@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.simplon.dream_team.dtos.LanguageTechnologyData;
-import co.simplon.dream_team.services.ProjectService;
+import co.simplon.dreamteam.mgr.dtos.LanguageTechnologyData;
+import co.simplon.dreamteam.mgr.services.ProjectService;
 
 @RestController
 @RequestMapping("/langTechs")
 @CrossOrigin("*")
-public class LanguagesTechonogiesController {
+public class LanguageTechonologyController {
 	private final ProjectService service;
 	
-	public LanguagesTechonogiesController(ProjectService service) {
+	public LanguageTechonologyController(ProjectService service) {
 		this.service = service;
 	}
 	

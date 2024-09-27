@@ -1,15 +1,15 @@
-package co.simplon.dream_team.repositories;
+package co.simplon.dreamteam.mgr.repositories;
 
 import java.util.Collection;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import co.simplon.dream_team.dtos.LanguageTechnologyData;
-import co.simplon.dream_team.entities.LanguageTechnology;
+import co.simplon.dreamteam.mgr.dtos.LanguageTechnologyData;
+import co.simplon.dreamteam.mgr.entities.LanguageTechnology;
 
 @Repository
-public interface LanguagesTechnologiesJPARepository extends JpaRepository<LanguageTechnology, Long>{
+public interface LanguageTechnologyJPARepository extends JpaRepository<LanguageTechnology, Long>{
 
 	LanguageTechnology findByLangTechNameIgnoreCase(String langTechName);
 

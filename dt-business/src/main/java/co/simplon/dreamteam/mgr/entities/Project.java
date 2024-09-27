@@ -1,4 +1,4 @@
-package co.simplon.dream_team.entities;
+package co.simplon.dreamteam.mgr.entities;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -20,7 +20,7 @@ public class Project {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long projectId;
+	private Long id;
 	
 	@ManyToMany
 	@JoinTable(
@@ -29,69 +29,69 @@ public class Project {
 		inverseJoinColumns = @JoinColumn(name = "lang_tech_id"))
 	Set<LanguageTechnology> usedLangTechs = new HashSet<>();
 
-	@Column(name = "project_name")
-	String projectName;
+	@Column(name = "name")
+	String name;
 
-	@Column(name = "project_unique_internal_identifier")
-	String projectUniqueInternalId;
+	@Column(name = "unique_internal_identifier")
+	String uniqueInternalId;
 
-	@Column(name = "project_start_date")
-	Date projectStartDate;
+	@Column(name = "start_date")
+	Date startDate;
 
-	@Column(name = "project_description")
-	String projectDescription;
+	@Column(name = "description")
+	String description;
 	
 	
 	public Project() {}
 
 
 	public Long getId() {
-		return projectId;
+		return id;
 	}
 
 
 	public void setId(Long project_id) {
-		this.projectId = project_id;
+		this.id = project_id;
 	}
 
 
 	public String getProjectName() {
-		return projectName;
+		return name;
 	}
 
 
 	public void setProjectName(String projectName) {
-		this.projectName = projectName;
+		this.name = projectName;
 	}
 
 
 	public String getProjectUniqueInternalId() {
-		return projectUniqueInternalId;
+		return uniqueInternalId;
 	}
 
 
 	public void setProjectUniqueInternalId(String projectUniqueInternalId) {
-		this.projectUniqueInternalId = projectUniqueInternalId;
+		this.uniqueInternalId = projectUniqueInternalId;
 	}
 
 
 	public Date getProjectStartDate() {
-		return projectStartDate;
+		return startDate;
 	}
 
 
 	public void setProjectStartDate(Date projectStartDate) {
-		this.projectStartDate = projectStartDate;
+		this.startDate = projectStartDate;
 	}
 
 
 	public String getProjectDescription() {
-		return projectDescription;
+		return description;
 	}
 
 
 	public void setProjectDescription(String projectDescription) {
-		this.projectDescription = projectDescription;
+		this.description = projectDescription;
 	}
 	
 
@@ -107,9 +107,9 @@ public class Project {
 
 	@Override
 	public String toString() {
-		return "Project [id=" + projectId + ", projectName=" + projectName + ", projectUniqueInternalId="
-				+ projectUniqueInternalId + ", projectStartDate=" + projectStartDate + ", projectDescription="
-				+ projectDescription + "]";
+		return "Project [id=" + id + ", projectName=" + name + ", projectUniqueInternalId="
+				+ uniqueInternalId + ", projectStartDate=" + startDate + ", projectDescription="
+				+ description + "]";
 	}
 	
 	

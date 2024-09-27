@@ -35,12 +35,11 @@ export default {
         }
     },
     props:{
-  stacksToProps: {
-    type: Array,
-    default: []
-  }
-},
-
+        stacksToProps: {
+            type: Array,
+            default: []
+        }
+    },
     mounted() {
         // this.getAllLangTechs()
         this.stacks= this.stacksToProps;
