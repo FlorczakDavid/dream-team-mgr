@@ -74,8 +74,6 @@ export default {
   },
 
   created() {
-    // URLからIDを取得してデータをロード
-    // this.id = this.$route.params.id;
     this.fetchData();
   },
 
@@ -109,17 +107,22 @@ export default {
       this.inputDate = date.toISOString().substring(0, 10);
       
       this.inputDesc= this.data.oneProject.description;
-      this.stackDatasTemps = this.data.oneLangTechProj.forEach(element => {
-             this.stacks.push(element.name)
-       });
-      console.log(this.stacks);
+
+      this.formData.langTechNames = this.data.oneLangTechProj.map(element => element.name);
+    console.log(this.formData.langTechNames);
+      this.stacks = this.formData.langTechNames;
+      // this.stackDatasTemps = this.data.oneLangTechProj.forEach(element => {
+      //        this.stacks.push(element.name)
+      //  });
+      // console.log(this.stacks);
 
 
     },
     addLangTech(langTech) {
-      this.formData.langTechNames.push(langTech);
-      if(langTech.trim() != "") {
+      //this.formData.langTechNames.push(langTech);
+      if(langTech.trim() !== "" && !this.formData.langTechNames.includes(langTech.trim())) {
         this.formData.langTechNames.push(langTech.trim());
+        console.log(this.formData.langTechNames)
       }
     },
     rmLangTech(langTech) {

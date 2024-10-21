@@ -42,8 +42,15 @@ export default {
     },
     mounted() {
         // this.getAllLangTechs()
-        this.stacks= this.stacksToProps;
-    },
+        this.stacks = [...this.stacksToProps];
+  },
+    watch: {
+    // when the value of props changes, the value would be reflected to stacks 
+        stacksToProps(newVal) {
+        this.stacks = [...newVal];
+        console.log(this.stacks)},
+        
+  },
     emits: ['add-langTech','rm-langTech'],
     methods: {
         async getAllLangTechs() {
