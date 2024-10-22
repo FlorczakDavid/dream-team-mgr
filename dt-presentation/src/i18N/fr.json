@@ -3,7 +3,7 @@
     },
     "formProject": {
         "pageTitle":"Ajoutez votre projet à la plateforme Dream Team",
-        "name":"Nom",
+        "name":"Nom du projet",
         "id":"Identifiant interne unique",
         "date":"Date de mise en production",
         "description":"Description",
@@ -13,6 +13,11 @@
             "name":"max 200 caractères",
             "id":"max 100 caractères",
             "date":"jj/mm/aaaa"
-        }
+        },
+        "validation" : " a un erreur"
+    },
+    "updateProject":{
+        "pageTitle": "Modifiez votre projet",
+        "updateButton": "Mise à jour"
     }
 }

@@ -1,47 +1,8 @@
-<template>
-  <h1 class="text-center mt-3">Modify your project</h1>
-  <div class="container bg-light">
-  <form  id="project-form" @submit.prevent="getFormValues" class="d-flex flex-column mx-3">
-    <div class="mb-3">
-      <label for="projectName" class="fs-5 form-label">Project Name <span class="text-danger">*</span></label>
-      <input type="text" v-model="inputName" class="form-control" id="projectName" maxlength="200" name="name">
-      <!-- <pre>{{ $v }}</pre> -->
-    </div>
-
-    <div class="mb-3">
-      <label for="projectId" class="fs-5 form-label">Project Id <span class="text-danger">*</span></label>
-      <input type="text" v-model="inputUIId" class="form-control" id="projectId" maxlength="100" name="projectId">
-    </div>
-
-    <div class="mb-3">
-      <label for="releaseDate" class="fs-5 form-label">Release Date <span class="text-danger">*</span></label>
-      <input type="date" v-model="inputDate" class="form-control" id="releaseDate" name="releaseDate">
-    </div>
-
-    <div class="mb-3">
-      <label for="description" class="fs-5 form-label">Description</label>
-      <textarea class="form-control" v-model="inputDesc" id="description" maxlength="5000" rows="3" name="desc"></textarea>
-      <span class="pull-right label label-default" id="count_message"></span>
-    </div>
-
-    <div class="mb-3">
-      <LangTechSelector
-        @add-langTech="addLangTech"
-        @rm-langTech="rmLangTech"
-        :stacksToProps="stacks"
-      />
-    </div>
-    <div class="d-flex justify-content-center m-4">
-    <button class="btn btn-primary">UPDATE</button></div>
-  </form>
-</div>
-</template>
-
 <script>
 import { useVuelidate } from '@vuelidate/core'
 import { helpers, required, maxLength} from '@vuelidate/validators'
 import {requiredMessage, maxLengthMessage} from '../plugin/validatorMessage'
-
+import axios from 'axios'
 import LangTechSelector from "./LangTechSelector.vue"
 
 export default {
@@ -67,14 +28,24 @@ export default {
         uniqueInternalId:'',
         startDate:'',
         description:'',
-        langTechNames:[]
+        langTechNames:[],
+        projectID: null
       }
 
     }
   },
-
+  validations () {
+    return {
+      inputName: { required, maxLengthValue: maxLength(10) },
+      inputUIId: { required, maxLengthValue: maxLength(10) },
+      inputDate: { required },
+      inputDesc : {maxLengthValue: maxLength(10) }
+    }
+  },
   created() {
     this.fetchData();
+    this.projectID = this.$route.params.id;
+
   },
 
   async mounted() {
@@ -90,14 +61,25 @@ export default {
     //   console.error("Failed to fetch data:", error);
     // }
   },
+  watch: {
+    '$route.params.id': {
+      immediate: true,
+      handler(newVal) {
+        this.projectID = newVal;
+      }
+    }
+  },
 
   methods: {
     async fetchData() {
       // const initialData = await fetch(`http://localhost:8080/projects/${id}`);
-      const initialData = await fetch(`http://localhost:8080/projects/1`);
-
-      this.data = await initialData.json();
-      console.log(this.data);
+      try{
+        console.log(this.projectID);
+        const response = await axios.get('http://localhost:8080/projects/'+ this.projectID)
+        this.data = response.data;
+      } catch {
+        console.error('Erreur lors de la récupération de projet:', error)
+      }
       this.inputName= this.data.oneProject.name;
       console.log(this.inputName);
       // this.nameInitial= this.data.projectName;
@@ -151,63 +133,47 @@ export default {
       // this.formData.langTechNames= this.stacks;
       // console.log(this.stacks);
 
-      const validated = this.validate();
-      this.sendValidForm(validated);
+      // const validated = this.validate();
+      this.sendValidForm();
     },
 
-    validate() {
-    let validated = true;
-    // HTML form inputs default type = string (empty)
-    // trim inputs ("best practice")
-    const tempName = this.formData.name.trim();
-    const tempUIId = this.formData.uniqueInternalId.trim();
-    const tempStartDate = this.formData.startDate.trim();
-    const tempDesc = this.formData.description.trim();
-    // set to false as soon as an input violates a validation constraint
-    if (tempName.length === 0 || tempName.length > 200) {
-        validated = false;
-    } else if (tempUIId.length === 0 || tempUIId.length > 100) {
-        validated = false;
-    } else if (tempStartDate.length === 0) {
-        validated = false;
-    } else if (tempDesc.length > 5000) {
-        validated = false;
-    }
-    return validated;
-},
+//     validate() {
+//     let validated = true;
+//     // HTML form inputs default type = string (empty)
+//     // trim inputs ("best practice")
+//     const tempName = this.formData.name.trim();
+//     const tempUIId = this.formData.uniqueInternalId.trim();
+//     const tempStartDate = this.formData.startDate.trim();
+//     const tempDesc = this.formData.description.trim();
+//     // set to false as soon as an input violates a validation constraint
+//     if (tempName.length === 0 || tempName.length > 200) {
+//         validated = false;
+//     } else if (tempUIId.length === 0 || tempUIId.length > 100) {
+//         validated = false;
+//     } else if (tempStartDate.length === 0) {
+//         validated = false;
+//     } else if (tempDesc.length > 5000) {
+//         validated = false;
+//     }
+//     return validated;
+// },
 
-    async sendValidForm(validated){
-      if (validated) {
-        await this.send(this.formData);
-    } else {
-        alert('Validation errors, please check your inputs!');
-    }
+    async sendValidForm(){
+      const isFormCorrect = await this.v$.$validate()
+      console.log(isFormCorrect);
+      if(isFormCorrect){
+        this.send(this.formData);
+      }else{
+        alert('Input is not correct');
+      }
     },
 
     async send(data) {
-      
-      //put input value null
-      this.inputName ='';
-      this.inputUIId ='';
-      this.inputDate='';
-      this.inputDesc='';
-      this.stacks= [];
 
-
-
-      const json = JSON.stringify(data);
-      console.log(json);
-      // JS object for request options
-      // Needs to set method POST (GET is default)
-      // Needs to specify request's body content type (expected by server)
-      const options = {
-        method: 'PUT',
-        headers: new Headers({ 'content-type': 'application/json' }),
-        body: json
-      }
+      // in fetch on n'a pas besoin de convertir en json ni de mettre header, il le fait automatiquement 
       // try-catch to handle potential client/server communication errors
       try {
-        const response = await fetch('http://localhost:8080/projects/1', options);
+        const response = await axios.put('http://localhost:8080/projects/1', data);
         if (response.status === 202 || response.status === 200) { // Expected success status code
           alert('Your update is done with success');
         } else { // Any other status code
@@ -217,6 +183,15 @@ export default {
         alert('An unexpected error has occured!');
         console.error(err);
       }
+
+      //put input value null
+      this.inputName ='';
+      this.inputUIId ='';
+      this.inputDate='';
+      this.inputDesc='';
+      this.stacks= [];
+
+      this.v$.$reset();
     }
   },
 
@@ -225,5 +200,46 @@ export default {
   }
 }
 </script>
+<template>
+  <h1 class="text-center mt-3">{{ $t('updateProject.pageTitle') }}</h1>
+  <div class="container bg-light">
+  <form  id="project-form" @submit.prevent="getFormValues" class="d-flex flex-column mx-3">
+    <div class="mb-3">
+      <label for="projectName" class="fs-5 form-label">{{ $t('formProject.name') }}<span class="text-danger">*</span></label>
+      <input type="text" v-model="inputName" class="form-control" id="projectName" maxlength="200" name="name">
+      <div v-if="v$.inputName.$error" class="text-danger">{{ $t('formProject.name') }} {{ $t('formProject.validation') }}</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="projectId" class="fs-5 form-label">{{ $t('formProject.id') }}<span class="text-danger">*</span></label>
+      <input type="text" v-model="inputUIId" class="form-control" id="projectId" maxlength="100" name="projectId">
+      <div v-if="v$.inputUIId.$error" class="text-danger">{{ $t('formProject.id') }}{{ $t('formProject.validation') }}</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="releaseDate" class="fs-5 form-label">{{ $t('formProject.date') }}<span class="text-danger">*</span></label>
+      <input type="date" v-model="inputDate" class="form-control" id="releaseDate" name="releaseDate">
+      <div v-if="v$.inputDate.$error" class="text-danger">{{ $t('formProject.date') }}{{ $t('formProject.validation') }}</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="fs-5 form-label">{{ $t('formProject.description') }}</label>
+      <textarea class="form-control" v-model="inputDesc" id="description" maxlength="5000" rows="3" name="desc"></textarea>
+      <span class="pull-right label label-default" id="count_message"></span>
+      <div v-if="v$.inputDesc.$error" class="text-danger">{{ $t('formProject.description') }}{{ $t('formProject.validation') }}</div>
+    </div>
+
+    <div class="mb-3">
+      <LangTechSelector
+        @add-langTech="addLangTech"
+        @rm-langTech="rmLangTech"
+        :stacksToProps="stacks"
+      />
+    </div>
+    <div class="d-flex justify-content-center m-4">
+    <button class="btn btn-primary">{{ $t('updateProject.updateButton') }}</button></div>
+  </form>
+</div>
+</template>
 
 <style scoped></style>
