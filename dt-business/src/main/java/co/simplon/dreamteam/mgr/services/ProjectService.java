@@ -45,7 +45,6 @@ public class ProjectService {
 	        if (langTechName == null || langTechName.isEmpty()) {
 	            throw new LanguageTechnologyInvalidNameException("Language technology name cannot be empty.");
 	        }
-	        //A modifier
 			LanguageTechnology langTech = langTechs.findByNameIgnoreCase(langTechName);
 			if(langTech == null) { //create
 				langTech = new LanguageTechnology();
@@ -93,37 +92,30 @@ public class ProjectService {
 	
 	public void updateProject(Long autoId, @Valid ProjectUpdate inputs) {
 		Project entity = projects.findById(autoId).get();
-	        entity.setName(inputs.name());
-	        entity.setDescription(inputs.description());
-	        entity.setStartDate(inputs.startDate());
-	        entity.setUniqueInternalId(inputs.uniqueInternalId());
+	    entity.setName(inputs.name());
+	    entity.setDescription(inputs.description());
+	    entity.setStartDate(inputs.startDate());
+	    entity.setUniqueInternalId(inputs.uniqueInternalId());
 	        
-	        String[] langTechNames = inputs.langTechNames();
-	        entity.getUsedLangTechs().clear();
-			for (String langTechName : langTechNames) {
-				langTechName = langTechName.trim();
-		        if (langTechName == null || langTechName.isEmpty()) {
-		            throw new LanguageTechnologyInvalidNameException("Language technology name cannot be empty.");
-		        }
-		        
-				LanguageTechnology langTech = langTechs.findByNameIgnoreCase(langTechName);
-				if(langTech == null) { //create
-					langTech = new LanguageTechnology();
-					langTech.setName(langTechName);
-					langTechs.save(langTech);
-					//entity.getUsedLangTechs().add(langTech);
-				}
-				
-				
-				//LanguageTechnology tempLT = new LanguageTechnology()
-				//entity.setUsedLangTechs(langTech);
-				entity.getUsedLangTechs().add(langTech);
-				
+	    String[] langTechNames = inputs.langTechNames();
+	    entity.getUsedLangTechs().clear();
+		for (String langTechName : langTechNames) {
+			langTechName = langTechName.trim();
+		    if (langTechName == null || langTechName.isEmpty()) {
+		    	throw new LanguageTechnologyInvalidNameException("Language technology name cannot be empty.");
+		    }
+		    
+		    LanguageTechnology langTech = langTechs.findByNameIgnoreCase(langTechName);
+			if(langTech == null) { //create
+				langTech = new LanguageTechnology();
+				langTech.setName(langTechName);
+				langTechs.save(langTech);
 			}
-
+			entity.getUsedLangTechs().add(langTech);
+				
+		}
 		projects.save(entity);
-
-	    }
+	}
 	
 	
 }

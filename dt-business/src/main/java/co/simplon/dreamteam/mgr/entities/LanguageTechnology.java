@@ -25,7 +25,7 @@ public class LanguageTechnology {
 	@Column(name = "name")
 	String name;
 	
-	public LanguageTechnology() {}
+	public LanguageTechnology() { /* TODO document why this constructor is empty */ }
 
 	public Long getId() {
 		return id;
@@ -54,7 +54,7 @@ public class LanguageTechnology {
 	@Override
 	public String toString() {
 		return "LanguageTechnology [langTechId=" + id + ", langTechName=" + name + "]";
-	};
+	}
 	
 	
 }

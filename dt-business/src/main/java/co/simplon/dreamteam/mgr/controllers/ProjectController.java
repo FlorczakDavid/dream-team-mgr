@@ -21,7 +21,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/projects")
-@CrossOrigin("*")
 public class ProjectController {
 	private final ProjectService service;
 	
@@ -43,7 +42,7 @@ public class ProjectController {
 	
 	@PutMapping("/{id}")
     void updateProject(@PathVariable("id") Long autoId, @Valid @RequestBody ProjectUpdate inputs) {
-	service.updateProject(autoId, inputs);
+		service.updateProject(autoId, inputs);
     }
 
 }
